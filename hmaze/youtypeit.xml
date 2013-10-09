@@ -1,0 +1,112 @@
+<?xml version="1.0" ?>
+<?xml-stylesheet href="documentation.xsl" ?>
+<alps>
+
+    <link rel="self" href="http://alps.io/profiles/youtypeit" />
+
+    <doc format="html">
+        <h2>Yout Type It, We Post It Profile</h2>
+        <p>Describes a common profile for implementing the ytiwpi service.</p>
+        <ul>
+            <li>
+                This profile has six transitions (w/ possible semantic elements)
+                and six semantic descriptors (two of which are containers).
+            </li>
+            <li>
+                There is no indication of 'cardinality' or 'appears' here.
+            </li>
+            <li>
+                There is no assurance that any of the descriptors (transition
+                or semantic) will appear in a response. What is listed here are
+                possible descriptors for the 'YouTypeIt' profile.
+            </li>
+            <li>
+                It is possible that some severs will return other semantic
+                descriptors and/or offer other transitions; that's fine. Any
+                clients that are relying on <i>this</i> profile as a guide will
+                likely ignore those unspecified descriptors.
+            </li>
+        </ul>
+    </doc>
+
+    <!-- transitions:
+         - post == unsafe transition
+         - remove, update == idempotent transitions
+         - collection, item, search == safe transitions
+    -->
+    <descriptor id="collection" href="http://alps.io/iana#collection" type="safe" rt="#messageList">
+        <link rel="help" href="http://tools.ietf.org/html/rfc6573#section-2.2" />
+        <doc>Link that returns a list of messages.</doc>
+    </descriptor>
+
+    <descriptor id="item" href="http://alps.io/iana#item" type="safe" rt="#messageItem">
+        <link rel="help" href="http://tools.ietf.org/html/rfc6573#section-2.1" />
+        <doc>Link that returns a single message.</doc>
+    </descriptor>
+
+    <descriptor id="search" type="safe" rt="#messageList">
+        <link rel="help" href="http://alps.io/iana#search" />
+        <doc>Use this transition to search for messages</doc>
+        <contains href="#text" type="semantic" />
+        <contains href="#author" type="semantic" />
+        <contains href="#messageDate" type="semantic" />
+    </descriptor>
+
+    <descriptor id="post" type="unsafe">
+        <doc>Use this transition to add a new message to the collection.</doc>
+        <contains href="#text" type="semantic" />
+        <contains href="#author" type="semantic" />
+    </descriptor>
+
+    <descriptor id="remove" type="idempotent">
+        <doc>Use this transition to remove a message from the collection,</doc>
+    </descriptor>
+
+    <descriptor id="update" type="idempotent">
+        <doc>Use this transition to update an existing message.</doc>
+        <contains href="#text" type="semantic" />
+        <contains href="#author" type="semantic" />
+    </descriptor>
+
+    <!-- semantic elements:
+         - messageList, message == containers
+         - text, author, id, date == data elements
+    -->
+    <descriptor id="messageList" type="semantic">
+        <doc>Represents a list of messages.</doc>
+        <contains href="#messageItem" type="semantic" />
+    </descriptor>
+
+    <descriptor id="messageItem" type="semantic">
+        <doc>Represents a single message.</doc>
+        <contains href="#text" type="semantic" />
+        <contains href="#author" type="semantic" />
+        <contains href="#id" type="semantic" />
+        <contains href="#messageDate" type="semantic" />
+    </descriptor>
+
+    <descriptor id="text" type="semantic">
+        <doc>Contains the text of the message.</doc>
+    </descriptor>
+
+    <descriptor id="author" type="semantic">
+        <link rel="help" href="http://microformats.org/wiki/hcard#fn" />
+        <doc>
+            Contains a text string representing the author of the
+            message.
+        </doc>
+    </descriptor>
+
+    <descriptor id="id" type="semantic">
+        <doc>Contains the unique identifier of the message.</doc>
+    </descriptor>
+
+    <descriptor id="messageDate" type="semantic">
+        <link rel="help" href="http://schema.org/Date" />
+        <doc>
+            Contains an ISO 8601 date representing the date of the
+            message.
+        </doc>
+    </descriptor>
+
+</alps>

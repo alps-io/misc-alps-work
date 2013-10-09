@@ -1,0 +1,110 @@
+<?xml version="1.0" ?>
+<?xml-stylesheet href="documentation.xsl" ?>
+<alps>
+
+  <link rel="self" href="http://alps.io/profiles/maze-xml" />
+  <link rel="help" href="http://amundsen.com/media-types/maze/" />
+
+  <doc format="html">
+      <h2>Maze+XML Profile</h2>
+      <p>Describes a common profile for implementing Maze+XML.</p>
+  </doc>
+
+  <!-- this is the primary container for all the other descriptors -->
+  <descriptor id="maze" type="semantic" cardinality="single" appears="SHOULD" contained="false">
+    <doc>Indicates the parent tag of Maze+XML document.</doc>
+    <descriptor href="#collection" type="semantic" cardinality="single" appears="MAY"/>
+    <descriptor href="#item"       type="semantic" cardinality="single" appears="MAY"/>
+    <descriptor href="#cell"       type="semantic" cardinality="many"   appears="MAY" />  
+    <descriptor href="#error"      type="semantic" cardinality="single" appears="MAY" />
+  </descriptor>
+
+  <!-- these can only appear within a container (e.g. maze) -->
+  <descriptor id="error" type="semantic" contained="true">
+    <link rel="help" href="http://amundsen.com/media-types/maze/format/#error-element" />
+    <doc>Describes an error message.</doc>
+  </descriptor>
+
+  <descriptor id="collection" type="semantic" contained="true">
+    <link rel="help" href="http://amundsen.com/media-types/maze/format/#collection-rel" />
+    <doc>Describes a collection of mazes.</doc>    
+    <descriptor href="#maze" name="maze" type="safe" rt="cell" cardinality="many" appears="MAY" />  
+  </descriptor>
+
+  <descriptor id="item" type="semantic" contained="true">
+    <link rel="help" href="http://amundsen.com/media-types/maze/format/#item-element" />
+    <doc>Describes an individual maze.</doc>
+  </descriptor>
+
+  <descriptor id="cell" type="semantic" contained="true">
+    <link rel="help" href="http://amundsen.com/media-types/maze/format/#cell-element" />
+    <doc>Describes a cell in a maze.</doc>
+    <descriptor href="#title"   type="semantic" cardinality="single" appears="SHOULD" />
+    <descriptor href="#current" type="safe" rt="cell" cardinality="single" appears="SHOULD" />
+    <descriptor href="#start"   type="safe" rt="cell" cardinality="single" appears="MAY" />
+    <descriptor href="#north"   type="safe" rt="cell" cardinality="single" appears="MAY" />
+    <descriptor href="#south"   type="safe" rt="cell" cardinality="single" appears="MAY" />
+    <descriptor href="#east"    type="safe" rt="cell" cardinality="single" appears="MAY" />
+    <descriptor href="#west"    type="safe" rt="cell" cardinality="single" appears="MAY" />
+    <descriptor href="#exit"    type="safe" cardinality="single" appears="MAY" />            
+  </descriptor>
+
+  <!-- option #1 -->
+  <descriptor id="title" type="semantic" contained="true">
+      <doc>Contains the name of the cell. NOTE: This is still missing from the Maze+XML spec! (MCA)</doc>
+  </descriptor>
+
+  <!-- option #2 (indicate valid containers) -->
+  <descriptor id="title" type="semantic" containers="collection maze title">
+      <doc>Contains the name of a collection, maze, or cell.</doc>
+  </descriptor>
+
+  <!-- 
+    these are ref'd above and will (therefore) appear within containers.
+    however, they are not _marked_ as containted="true" here. that means
+    others linking to these items will be able to use them without containers
+  -->
+  <descriptor id="maze">
+    <link rel="help" href="http://amundsen.com/media-types/maze/format/#maze-rel" />
+    <doc>Links to a particular maze.</doc>
+  </descriptor>
+
+  <descriptor id="north" type="safe">
+    <link rel="help" href="http://amundsen.com/media-types/maze/format/#north-rel" />
+    <doc>Refers to a resource that is "north" of the current resource.</doc>
+  </descriptor>
+
+  <descriptor id="south" type="safe">
+    <link rel="help" href="http://amundsen.com/media-types/maze/format/#south-rel" />
+    <doc>Refers to a resource that is "south" of the current resource.</doc>
+  </descriptor>
+
+  <descriptor id="east" type="safe">
+    <link rel="help" href="http://amundsen.com/media-types/maze/format/#east-rel" />
+    <doc>Refers to a resource that is "east" of the current resource.</doc>
+  </descriptor>
+
+  <descriptor id="west" type="safe">
+    <link rel="help" href="http://amundsen.com/media-types/maze/format/#west-rel" />
+    <doc>Refers to a resource that is "west" of the current resource.</doc>
+  </descriptor>
+
+  <descriptor id="start" type="safe">
+    <link rel="help" href="http://amundsen.com/media-types/maze/format/#start-rel" />
+    <doc>Refers to the first resource in a collection of resources.</doc>
+  </descriptor>
+
+  <descriptor id="current" type="safe">
+    <link rel="help" href="http://amundsen.com/media-types/maze/format/#current-rel" />
+    <doc>Refers to a resource containing the most recent item(s) in a collection of resources.</doc>
+  </descriptor>
+  
+  <descriptor id="exit" type="safe">
+    <link rel="help" href="http://amundsen.com/media-types/maze/format/#exit-rel" />
+    <doc>
+      Refers to a resource that represents the exit 
+      or end of the current client actvity or process.
+    </doc>
+  </descriptor>
+
+</alps>

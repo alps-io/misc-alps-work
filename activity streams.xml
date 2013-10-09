@@ -1,0 +1,339 @@
+<alps version="1.0">
+ <description>
+  This is an ALPS description of the semantics defined by the
+  ActivityStreams standard. It is based on information published in
+  the "JSON Activity Streams 1.0" standard
+  [http://activitystrea.ms/specs/json/1.0/]
+
+  The 'activity' in Activity Streams is a description of an action that
+  was performed (the verb) at some instant in time by someone or
+  something (the actor) against some kind of person, place, or thing
+  (the object). There may also be a target (like a photo album or
+  wishlist) involved.
+
+  The 'stream' in Activity Streams is a feed of related activities for a
+  given person or social object.
+
+  Put together, Activity Streams is a convenient and consistent way to
+  syndicate social activities around the web.
+
+  This document does *not* describe Activity Streams
+  documents. Instead, it allows reuse of the semantics defined by
+  Activity Streams in documents written in any hypermedia type with
+  ALPS support (HTML, Collection+JSON, Siren, etc.) The goal of this
+  document is to stop other people from repeating the work Activity
+  Streams has done to catalogue the sort of things people do on the
+  Web.
+
+  The semantics defined by this document are comparable in strictness
+  to an HTML microformat; much looser than the semantics defined by
+  Activity Streams. An example: Activity Streams says that the 'actor'
+  in an activity must be an Activity Streams 'object'. This document
+  requires that an event have an 'actor', but an 'actor' can be
+  anything at all, so long as it's tagged with the 'actor' descriptor.
+
+  <div class="activity">
+   <div class="actor">
+    J.R. "Bob" Dobbs
+   </div>
+  </div>
+
+  An 'actor' that also happens to implement the semantics of 'object'
+  would be tagged with both 'actor' and 'object':
+
+  <div class="activity">
+   <div class="actor object">
+    <span class="displayName">
+     J.R. "Bob" Dobbs
+    </span>
+    (<a href="/profiles/jdobbs" class="url" rel="person">Profile</a>)
+   </div>
+  </div>
+ </description>
+
+ <element id="activity" appears="MUST" cardinality="many">
+
+  <description>
+   A description of an action that was performed (the verb) at some
+   instant in time by someone or something (the actor) against some
+   kind of person, place, or thing (the object). There may also be a
+   target (like a photo album or wishlist) involved.
+  </description>
+
+  <child id="actor" appears="MUST" cardinality="single">
+   <description>
+    Describes the entity that performed the activity.
+   </description>
+  </child>
+
+  <child id="content" appears="MAY" cardinality="single">
+   <description>
+    Natural-language description of the activity containing containing
+    HTML markup. Visual elements such as thumbnail images MAY be
+    included.
+   </description>
+  </child>
+
+  <child id="generator" appears="MAY" cardinality="single">
+   <description>
+    Describes the application that generated the activity.
+   </description>
+  </child>
+
+  <child id="icon" appears="MAY" cardinality="single">
+   <description>
+    Description of a resource providing a visual representation of the
+    object, intended for human consumption. The image SHOULD have an
+    aspect ratio of one (horizontal) to one (vertical) and SHOULD be
+    suitable for presentation at a small size.
+   </description>
+  </child>
+
+  <child href="#id" appears="SHOULD" cardinality="single"/>
+
+  <child appears="SHOULD" cardinality="single">
+   <description>
+     Describes the primary object of the activity. For instance, in
+     the activity, "John saved a movie to his wishlist", the object of
+     the activity is "movie". If 'object' is not present, the
+     primary object of the activity MAY be implied by context.
+   </description>
+  </child>
+
+  <child href="#published" appears="MUST" cardinality="single"/>
+
+  <child id="provider" appears="MAY" cardinality="single">
+   <description>
+    Describes the application that published the activity. Note that
+    this is not necessarily the same entity that generated the
+    activity.
+   </description>
+  </child>
+
+  <child id="target" appears="MAY" cardinality="single">
+   <description>
+    Describes the target of the activity. The precise meaning of the
+    activity's target is dependent on the activity's 'verb', but will
+    often be the object of the English preposition "to". For instance,
+    in the activity, "John saved a movie to his wishlist", the target
+    of the activity is "wishlist". The activity target MUST NOT be
+    used to identity an indirect object that is not a target of the
+    activity.
+   </description>
+  </child>
+
+  <child id="title" appears="MAY" cardinality="single">
+   <description>
+    Natural-language title or headline for the activity containing
+    HTML markup.
+   </description>
+  </child>
+
+  <child href="#updated" appears="MAY" cardinality="single"/>
+
+  <child href="#url" type="safe" appears="MAY" cardinality="single">
+   <description>
+     An IRI [RFC3987] identifying a resource providing an HTML
+     representation of the activity.
+   </description>
+  </child>
+
+  <child id="verb" appears="SHOULD" cardinality="single">
+   <description>
+     Identifies the action that the activity describes. Value MUST be
+     non-empty and match either the "isegment-nz-nc" or the "IRI"
+     production in [RFC3339]. The unsafe link relations defined in
+     this document make good values for "verb". Note that the use of a
+     relative reference other than a simple name is not allowed. If
+     the verb is not specified, or if the value is null, the verb is
+     assumed to be "post".
+   </description>
+  </child>
+ </element>
+
+ <element id="media-link" appears="MUST NOT">
+
+  <child name="duration" appears="MAY" cardinality="single">
+   <description>
+    A hint to the consumer about the length, in seconds, of the media
+    resource identified by the 'url' property. A media link MAY
+    contain a 'duration' property when the target resource is a
+    time-based media item such as an audio or video file.
+   </description>
+  </child>
+
+  <child name="height" appears="MAY" cardinality="single">
+   <description>
+    A hint to the consumer about the height, in pixels, of the media
+    resource identified by the "url" property. A media link MAY contain
+    a "width" property when the target resource is a visual media item
+    such as an image, video or embeddable HTML page.
+   </description>
+  </child>
+
+  <child name="width" appears="MAY" cardinality="single">
+   <description>
+    A hint to the consumer about the width, in pixels, of the media
+    resource identified by the "url" property. A media link MAY contain
+    a "width" property when the target resource is a visual media item
+    such as an image, video or embeddable HTML page.
+   </description>
+  </child>
+
+  <child href="#url" appears="MUST" cardinality="single">
+   <description>
+ 	The IRI of the media resource being linked.
+   </description>
+  </child>
+ </element>
+
+ <element id="object" appears="MUST NOT">
+  <description>
+   An object is a collection of data with very generic aplication. An
+   object may be 'actor', 'generator', 'object', 'provider', or
+   'target' of an activity. In the activity "John saved a movie to his
+   wishlist," the objects are: John himself ('actor'), the movie
+   ('object'), the wishlist ('target'), the service that makes an
+   announcement when John's wishlist changes ('provider'), and the
+   service John uses to manage his wishlist ('genarator').
+  </description>
+
+  <child id="attachment" appears="MAY" cardinality="many">
+   <description>
+     A collection of one or more additional, associated objects,
+     similar to the concept of attached files in an email message.
+   </description>
+  </child>
+
+  <child id="author" appears="MAY" cardinality="single">
+   <description>
+     Describes the entity that created or authored the object. Note
+     that the author field identifies the entity that created the
+     object and does not necessarily identify the entity that
+     published the object. For instance, it may be the case that an
+     object created by one person is posted and published to a system
+     by an entirely different entity.
+   </description>
+  </child>
+
+  <child id="content" appears="MAY" cardinality="single">
+   <description>
+    Natural-language description of the object including HTML
+    markup. Visual elements such as thumbnail images MAY be included.
+   </description>
+  </child>
+
+  <child id="displayname" appears="MAY" cardinality="single">
+   <description>
+     A natural-language, human-readable and plain-text name for the
+     object. HTML markup MUST NOT be included.
+   </description>
+  </child>
+
+  <child id="downstreamDuplicate" type="safe" appears="MAY" cardinality="many">
+   <description>
+    An absolute IRI [RFC3987] identifying an object that duplicates
+    this object's content. An object SHOULD use the
+    downstreamDuplicate element when there are known objects,
+    possibly in a different system, that duplicate the content in this
+    object. This MAY be used as a hint for consumers to use when
+    resolving duplicates between objects received from different
+    sources.
+   </description>
+  </child>
+
+  <child href="#id" cardinality="single"/>
+
+  <child id="image" appears="MAY" cardinality="single">
+   <description>
+    Description of a resource providing a visual representation of the
+    object, intended for human consumption.
+   </description>
+  </child>
+
+  <child href="#published" appears="MAY" cardinality="single"/>
+
+  <child id="summary" appears="MAY" cardinality="single">
+   <description>
+    Natural-language summarization of the object containing HTML
+    markup. Visual elements such as thumbnail images MAY be included.
+   </description>
+  </child>
+
+  <child href="#updated" cardinality="single"/>
+
+  <child id="upstreamDuplicate" rel="safe" appears="MAY" cardinality="many">
+   <description>
+    An absolute IRI [RFC3987] identifying an object that duplicates
+    this object's content. An object SHOULD use the
+    downstreamDuplicate property when a publisher is knowingly
+    duplicating with a new ID the content from another object. This
+    MAY be used as a hint for consumers to use when resolving
+    duplicates between objects received from different sources.
+   </description>
+  </child>
+
+  <child href="#url" appears="MAY" cardinality="single">
+   <description>
+     Identifies a link to an HTML representation of the object. The
+     link relation should describe the object. (e.g. "activity",
+     "alert", "application", ..., as given in the Activity Schema
+     document) This link relation replaces the 'objectType' attribute
+     defined by Activity Streams.
+   </description>
+  </child>
+ </element>
+
+ <!--Elements common to "activity", "media-link", and "object".-->
+
+ <element id="id" type="safe" appears="MUST NOT">
+  <description>
+   Provides a permanent, universally unique identifier for something
+   in the form of an absolute IRI [RFC3987]. If the 'id' element is
+   not present but the 'url' element is, consumers MAY use the value
+   of 'url' as a less-reliable, non-unique identifier.
+   </description>
+ </element>
+
+ <element id="published" appears="MUST NOT">
+   <description>
+    The date and time at which something was first published. The
+    format is as described in [RFC3339].
+   </description>
+ </element>
+
+ <element id="updated" appears="MUST NOT">
+  <description>
+   The date and time at which something previously published was
+   modified. The format is as described in [RFC3339].
+  </description>
+ </element>
+
+ <element id="url" type="safe" appears="MUST NOT">
+  <description>
+    An IRI [RFC3987] identifying a resource providing a representation
+    of the thing being described.
+  </description>
+ </element>
+
+<!-- This is the only object type defined by the Activity Streams
+     standard. It may be used as either a safe link relation or a
+     semantic descriptor. The Activity Schema draft defines many more
+     object types. -->
+
+ <element id="activity-object" name="activity" type="descriptor safe">
+  <description>
+  An object representation of an activity.
+  </description>
+ </element>
+
+<!-- This is the only verb defined by the Activity Stream standard.
+     It may be used anywhere as an unsafe link relation.-->
+
+ <element id="post" type="unsafe">
+  <description>
+   The act of authoring an object and then publishing it online.
+  </description>
+ </element>
+</alps>
+
