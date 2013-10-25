@@ -1,6 +1,6 @@
 # Scaffolding/Testing Idea #
 
-*IDEA*: Use ALPS to drive a scaffolding/testing harness. 
+*Use ALPS to drive a scaffolding/testing harness.* 
 
 Utility woukld consume an ALPS document and then generate (random?) responses with sample data (from where?) based on the
 semantic descriptors in the ALPS document.  The responses would also include (random?) affordances from the ALPS
@@ -29,7 +29,3 @@ are testing that the server _does_ ignore the right things
  
 There may need to be some collection of config/mapping of the missing info (data quality/validation, workflow, media-type)
 that is used to _add_ to the ALPS document in order to create useful tests.
-
-## Explorer ##
-TK
-
