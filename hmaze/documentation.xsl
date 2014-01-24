@@ -46,7 +46,7 @@
             <xsl:when test="contains(.,'#')">
               <li><xsl:value-of select="name()" /> : <a href="{.}"><xsl:value-of select="." /></a></li>
             </xsl:when>
-            <xsl:when test="name()='href'">i
+            <xsl:when test="name()='href'">
               <li><xsl:value-of select="name()" /> : <a href="{.}"><xsl:value-of select="." /></a></li>
             </xsl:when>
             <xsl:otherwise>
@@ -82,7 +82,7 @@
             <xsl:when test="contains(.,'#')">
               <li><xsl:value-of select="name()" /> : <a href="{.}"><xsl:value-of select="." /></a></li>
             </xsl:when>
-            <xsl:when test="name()='href'">i
+            <xsl:when test="name()='href'">
               <li><xsl:value-of select="name()" /> : <a href="{.}"><xsl:value-of select="." /></a></li>
             </xsl:when>
             <xsl:otherwise>
@@ -94,7 +94,7 @@
   </div>
 </xsl:template>
 
-
+<!-- supports old format ALPS docs -->
 <xsl:template match="contains">
   <div class="contains">
       <h4 class="id" id="{@id}"><xsl:value-of select="@id" /></h4>
